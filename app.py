@@ -123,37 +123,41 @@ def crear_graficos(df):
     """
     # Comparativa de Ratios de Valoración
     if 'P/E' in df.columns and 'P/B' in df.columns and 'P/FCF' in df.columns:
-        df.plot(x='Ticker', y=['P/E', 'P/B', 'P/FCF'], kind='bar', figsize=(10, 6))
-        plt.title('Comparativa de Ratios de Valoración')
-        plt.ylabel('Valor')
-        st.pyplot()
+        fig, ax = plt.subplots(figsize=(10, 6))  # Crear la figura y el eje
+        df.plot(x='Ticker', y=['P/E', 'P/B', 'P/FCF'], kind='bar', ax=ax)  # Usar 'ax'
+        ax.set_title('Comparativa de Ratios de Valoración')
+        ax.set_ylabel('Valor')
+        st.pyplot(fig)  # Pasar la figura a st.pyplot
     else:
         st.warning("Algunos datos de valoración no están disponibles.")
 
     # Rendimiento de Dividendos
     if 'Dividendo' in df.columns and 'Payout Ratio' in df.columns:
-        df.plot(x='Ticker', y=['Dividendo', 'Payout Ratio'], kind='bar', figsize=(10, 6))
-        plt.title('Rendimiento de Dividendos')
-        plt.ylabel('Valor')
-        st.pyplot()
+        fig, ax = plt.subplots(figsize=(10, 6))  # Crear la figura y el eje
+        df.plot(x='Ticker', y=['Dividendo', 'Payout Ratio'], kind='bar', ax=ax)  # Usar 'ax'
+        ax.set_title('Rendimiento de Dividendos')
+        ax.set_ylabel('Valor')
+        st.pyplot(fig)  # Pasar la figura a st.pyplot
     else:
         st.warning("Algunos datos de dividendos no están disponibles.")
 
     # Rentabilidad: ROE vs ROA
     if 'ROE' in df.columns and 'ROA' in df.columns:
-        df.plot(x='Ticker', y=['ROE', 'ROA'], kind='bar', figsize=(10, 6))
-        plt.title('Rentabilidad: ROE vs ROA')
-        plt.ylabel('Porcentaje')
-        st.pyplot()
+        fig, ax = plt.subplots(figsize=(10, 6))  # Crear la figura y el eje
+        df.plot(x='Ticker', y=['ROE', 'ROA'], kind='bar', ax=ax)  # Usar 'ax'
+        ax.set_title('Rentabilidad: ROE vs ROA')
+        ax.set_ylabel('Porcentaje')
+        st.pyplot(fig)  # Pasar la figura a st.pyplot
     else:
         st.warning("Algunos datos de rentabilidad no están disponibles.")
 
     # Eficiencia: WACC vs ROIC
     if 'WACC' in df.columns and 'ROIC' in df.columns:
-        df.plot(x='Ticker', y=['WACC', 'ROIC'], kind='bar', figsize=(10, 6))
-        plt.title('Eficiencia: WACC vs ROIC')
-        plt.ylabel('Porcentaje')
-        st.pyplot()
+        fig, ax = plt.subplots(figsize=(10, 6))  # Crear la figura y el eje
+        df.plot(x='Ticker', y=['WACC', 'ROIC'], kind='bar', ax=ax)  # Usar 'ax'
+        ax.set_title('Eficiencia: WACC vs ROIC')
+        ax.set_ylabel('Porcentaje')
+        st.pyplot(fig)  # Pasar la figura a st.pyplot
     else:
         st.warning("Algunos datos de eficiencia no están disponibles.")
 
