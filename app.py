@@ -29,18 +29,18 @@ def obtener_datos_acciones(tickers):
                 'Sector': info.get('sector', 'N/A'),
                 'Industria': info.get('industry', 'N/A'),
                 'País': info.get('country', 'N/A'),
-                'P/E': info.get('trailingPE', 'N/A'),
-                'P/B': info.get('priceToBook', 'N/A'),
-                'P/FCF': info.get('priceToFreeCashFlows', 'N/A'),
-                'Dividendo': info.get('dividendRate', 'N/A'),
-                'Payout Ratio': info.get('payoutRatio', 'N/A'),
-                'ROA': info.get('returnOnAssets', 'N/A'),
-                'ROE': info.get('returnOnEquity', 'N/A'),
-                'Current Ratio': info.get('currentRatio', 'N/A'),
-                'LTDebt/Eq': info.get('longTermDebtToEquity', 'N/A'),
-                'Debt/Eq': info.get('debtToEquity', 'N/A'),
-                'Oper Margin': info.get('operatingMargins', 'N/A'),
-                'Profit Margin': info.get('profitMargins', 'N/A'),
+                'P/E': info.get('trailingPE', 0),  # Asegurarse de que sea un valor numérico
+                'P/B': info.get('priceToBook', 0),  # Asegurarse de que sea un valor numérico
+                'P/FCF': info.get('priceToFreeCashFlows', 0),  # Asegurarse de que sea un valor numérico
+                'Dividendo': info.get('dividendRate', 0),  # Asegurarse de que sea un valor numérico
+                'Payout Ratio': info.get('payoutRatio', 0),  # Asegurarse de que sea un valor numérico
+                'ROA': info.get('returnOnAssets', 0),  # Asegurarse de que sea un valor numérico
+                'ROE': info.get('returnOnEquity', 0),  # Asegurarse de que sea un valor numérico
+                'Current Ratio': info.get('currentRatio', 0),  # Asegurarse de que sea un valor numérico
+                'LTDebt/Eq': info.get('longTermDebtToEquity', 0),  # Asegurarse de que sea un valor numérico
+                'Debt/Eq': info.get('debtToEquity', 0),  # Asegurarse de que sea un valor numérico
+                'Oper Margin': info.get('operatingMargins', 0),  # Asegurarse de que sea un valor numérico
+                'Profit Margin': info.get('profitMargins', 0),  # Asegurarse de que sea un valor numérico
                 'WACC': wacc,
                 'ROIC': roic,
                 'Creación de Valor (WACC vs ROIC)': 'Creando valor' if creando_valor else 'No creando valor'
@@ -122,28 +122,40 @@ def crear_graficos(df):
     Genera gráficos comparativos de Rentabilidad, Eficiencia, Apalancamiento, Crecimiento, etc.
     """
     # Comparativa de Ratios de Valoración
-    df.plot(x='Ticker', y=['P/E', 'P/B', 'P/FCF'], kind='bar', figsize=(10, 6))
-    plt.title('Comparativa de Ratios de Valoración')
-    plt.ylabel('Valor')
-    st.pyplot()
+    if 'P/E' in df.columns and 'P/B' in df.columns and 'P/FCF' in df.columns:
+        df.plot(x='Ticker', y=['P/E', 'P/B', 'P/FCF'], kind='bar', figsize=(10, 6))
+        plt.title('Comparativa de Ratios de Valoración')
+        plt.ylabel('Valor')
+        st.pyplot()
+    else:
+        st.warning("Algunos datos de valoración no están disponibles.")
 
     # Rendimiento de Dividendos
-    df.plot(x='Ticker', y=['Dividendo', 'Payout Ratio'], kind='bar', figsize=(10, 6))
-    plt.title('Rendimiento de Dividendos')
-    plt.ylabel('Valor')
-    st.pyplot()
+    if 'Dividendo' in df.columns and 'Payout Ratio' in df.columns:
+        df.plot(x='Ticker', y=['Dividendo', 'Payout Ratio'], kind='bar', figsize=(10, 6))
+        plt.title('Rendimiento de Dividendos')
+        plt.ylabel('Valor')
+        st.pyplot()
+    else:
+        st.warning("Algunos datos de dividendos no están disponibles.")
 
     # Rentabilidad: ROE vs ROA
-    df.plot(x='Ticker', y=['ROE', 'ROA'], kind='bar', figsize=(10, 6))
-    plt.title('Rentabilidad: ROE vs ROA')
-    plt.ylabel('Porcentaje')
-    st.pyplot()
+    if 'ROE' in df.columns and 'ROA' in df.columns:
+        df.plot(x='Ticker', y=['ROE', 'ROA'], kind='bar', figsize=(10, 6))
+        plt.title('Rentabilidad: ROE vs ROA')
+        plt.ylabel('Porcentaje')
+        st.pyplot()
+    else:
+        st.warning("Algunos datos de rentabilidad no están disponibles.")
 
     # Eficiencia: WACC vs ROIC
-    df.plot(x='Ticker', y=['WACC', 'ROIC'], kind='bar', figsize=(10, 6))
-    plt.title('Eficiencia: WACC vs ROIC')
-    plt.ylabel('Porcentaje')
-    st.pyplot()
+    if 'WACC' in df.columns and 'ROIC' in df.columns:
+        df.plot(x='Ticker', y=['WACC', 'ROIC'], kind='bar', figsize=(10, 6))
+        plt.title('Eficiencia: WACC vs ROIC')
+        plt.ylabel('Porcentaje')
+        st.pyplot()
+    else:
+        st.warning("Algunos datos de eficiencia no están disponibles.")
 
 
 # ---------------------------------------------
